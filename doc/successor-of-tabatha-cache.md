@@ -31,13 +31,18 @@ This made me realize that there are two types of cache (according to me):
 - persistent cache: it's there forever until you clean it (cron is your friend, and/or you can have bash command
             for your own debug sessions)
             
+
+Actually, this is just a role distinction.
+Any cache system can be used as an organic one and/or a persistent one.
             
-The thing is: users usually don't touch your objects. And that's where persistent cache is particularly useful.
-If users can touch your objects, then persistent cache is not an option anymore, you need a more organic cache.
             
-            
-            
-And I figured that what I needed today was the persistent cache, which my application lacks right now.
+And I figured that what I needed today was the persistent cache type.
+I don't like doing persistent cache with tabatha, because of two things:
+
+- the way I used it (I used table identifiers as delete identifiers, which now I consider a mediocreidea)
+- tabatha cache REQUIRES the cache identifiers, that's a lot of attention that can be automated
+
+
 So, therefore I'm going to create Derby cache, which is my persistent cache tool.
 
 The name comes from a contraction of daily and rebuild (daiRebui=derby).

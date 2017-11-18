@@ -32,14 +32,20 @@ class FileSystemDerbyCache extends DerbyCache
     //--------------------------------------------
     public function get($cacheIdentifier, callable $cacheItemGenerator)
     {
+        $this->hook('onCacheStart', $cacheItemGenerator);
         $file = $this->rootDir . "/" . $cacheIdentifier . ".txt";
         if (file_exists($file)) {
+
+            $this->hook('onCacheHit', $cacheItemGenerator);
+            $this->hook('onCacheEnd', $cacheItemGenerator);
             return unserialize(file_get_contents($file));
         }
 
         $ret = call_user_func($cacheItemGenerator);
         $data = serialize($ret);
         FileSystemTool::mkfile($file, $data);
+        $this->hook('onCacheCreate', $cacheItemGenerator);
+        $this->hook('onCacheEnd', $cacheItemGenerator);
         return $ret;
     }
 
@@ -62,4 +68,11 @@ class FileSystemDerbyCache extends DerbyCache
     }
 
 
+    //--------------------------------------------
+    //
+    //--------------------------------------------
+    protected function hook($hookName, $cacheIdentifier) // override me
+    {
+
+    }
 }

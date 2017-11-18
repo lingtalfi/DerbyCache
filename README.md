@@ -69,6 +69,10 @@ $cache->deleteByPrefix("Ekom/car--"); // will remove the files from our filesyst
 History Log
 ------------------
     
+- 1.1.0 -- 2017-11-18
+
+    - add FileSystemDerbyCache hook system
+    
 - 1.0.0 -- 2017-11-17
 
     - initial commit
