@@ -23,9 +23,10 @@ interface DerbyCacheInterface
     /**
      * @param $cacheIdentifier , string using the "DerbyCache naming convention" (see at the top of this document)
      * @param callable $cacheItemGenerator , whenever called, this function returns the item (to cache/return)
+     * @param bool $forceGenerate =false, if true, the cache will never be hit and the callback will always execute
      * @return mixed, the item
      */
-    public function get($cacheIdentifier, callable $cacheItemGenerator);
+    public function get($cacheIdentifier, callable $cacheItemGenerator, $forceGenerate = false);
 
     /**
      * Remove all caches which cacheIdentifier starts with the given prefix

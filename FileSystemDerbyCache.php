@@ -30,11 +30,11 @@ class FileSystemDerbyCache extends DerbyCache
     //--------------------------------------------
     //
     //--------------------------------------------
-    public function get($cacheIdentifier, callable $cacheItemGenerator)
+    public function get($cacheIdentifier, callable $cacheItemGenerator, $forceGenerate = false)
     {
         $this->hook('onCacheStart', $cacheIdentifier);
         $file = $this->getCacheFile($cacheIdentifier);
-        if (file_exists($file)) {
+        if (false === $forceGenerate && file_exists($file)) {
 
             $this->hook('onCacheHit', $cacheIdentifier);
             $this->hook('onCacheEnd', $cacheIdentifier);

@@ -162,6 +162,10 @@ a(UniversalFactory::getCar("css")); // "I'm a css car with 4 wheels: wheel top l
 History Log
 ------------------
     
+- 1.3.0 -- 2017-11-18
+
+    - add DerbyCacheInterface.get forceGenerate argument
+    
 - 1.2.0 -- 2017-11-18
 
     - add WithRelatedFileSystemDerbyCache
