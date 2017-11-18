@@ -12,7 +12,7 @@ use Bat\FileSystemTool;
 class FileSystemDerbyCache extends DerbyCache
 {
 
-    private $rootDir;
+    protected $rootDir;
 
     public function __construct()
     {
@@ -32,26 +32,26 @@ class FileSystemDerbyCache extends DerbyCache
     //--------------------------------------------
     public function get($cacheIdentifier, callable $cacheItemGenerator)
     {
-        $this->hook('onCacheStart', $cacheItemGenerator);
-        $file = $this->rootDir . "/" . $cacheIdentifier . ".txt";
+        $this->hook('onCacheStart', $cacheIdentifier);
+        $file = $this->getCacheFile($cacheIdentifier);
         if (file_exists($file)) {
 
-            $this->hook('onCacheHit', $cacheItemGenerator);
-            $this->hook('onCacheEnd', $cacheItemGenerator);
+            $this->hook('onCacheHit', $cacheIdentifier);
+            $this->hook('onCacheEnd', $cacheIdentifier);
             return unserialize(file_get_contents($file));
         }
 
         $ret = call_user_func($cacheItemGenerator);
         $data = serialize($ret);
         FileSystemTool::mkfile($file, $data);
-        $this->hook('onCacheCreate', $cacheItemGenerator);
-        $this->hook('onCacheEnd', $cacheItemGenerator);
+        $this->hook('onCacheCreate', $cacheIdentifier);
+        $this->hook('onCacheEnd', $cacheIdentifier);
         return $ret;
     }
 
     public function deleteByPrefix($prefix)
     {
-        $file = $this->rootDir . "/" . $prefix;
+        $file = $this->getDeleteCacheDir() . "/" . $prefix;
         $baseDir = dirname($file);
         $filePrefix = basename($file);
         if (is_dir($baseDir)) {
@@ -60,6 +60,7 @@ class FileSystemDerbyCache extends DerbyCache
                 if ('.' !== $file && '..' !== $file) {
                     if (0 === strpos($file, $filePrefix)) {
                         $realFile = $baseDir . "/" . $file;
+                        $this->hook('onCacheDelete', $realFile);
                         unlink($realFile);
                     }
                 }
@@ -71,8 +72,18 @@ class FileSystemDerbyCache extends DerbyCache
     //--------------------------------------------
     //
     //--------------------------------------------
-    protected function hook($hookName, $cacheIdentifier) // override me
+    protected function hook($hookName, $argument) // override me
     {
 
+    }
+
+    protected function getCacheFile($cacheIdentifier)
+    {
+        return $this->rootDir . "/" . $cacheIdentifier . ".txt";
+    }
+
+    protected function getDeleteCacheDir()
+    {
+        return $this->rootDir;
     }
 }

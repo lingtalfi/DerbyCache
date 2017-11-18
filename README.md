@@ -66,8 +66,106 @@ $cache->deleteByPrefix("Ekom/car--"); // will remove the files from our filesyst
 ```
 
 
+
+
+Playground for WithRelatedFileSystemDerbyCache
+------------------
+
+```php
+<?php
+
+
+use Core\Services\A;
+use DerbyCache\WithRelatedFileSystemDerbyCache;
+
+// using kamille framework here (https://github.com/lingtalfi/kamille)
+require_once __DIR__ . "/../boot.php";
+require_once __DIR__ . "/../init.php";
+
+
+A::testInit();
+
+
+//--------------------------------------------
+// WithRelatedFileSystemDerbyCache PLAYGROUND
+//--------------------------------------------
+class UniversalFactory
+{
+
+    /**
+     * @var $cache WithRelatedFileSystemDerbyCache
+     */
+    private static $cache;
+
+    public static function getCar($color = "green")
+    {
+        return self::getCache()->get("Ekom/car--$color", function () use ($color) {
+            $positions = [
+                self::getWheel("top left"),
+                self::getWheel("top right"),
+                self::getWheel("bottom left"),
+                self::getWheel("bottom right"),
+            ];
+            return "I'm a $color car with 4 wheels: " . implode(', ', $positions);
+        });
+    }
+
+    public static function getWheel($position)
+    {
+        return self::getCache()->get("Ekom/car-wheel-$position", function () use ($position) {
+            return "wheel $position";
+        });
+    }
+
+    public static function getCache()
+    {
+        if (null === self::$cache) {
+            self::$cache = WithRelatedFileSystemDerbyCache::create()
+                ->setRootDir("/tmp/Ekom");
+        }
+        return self::$cache;
+    }
+
+}
+
+
+a(UniversalFactory::getCar("css")); // "I'm a css car with 4 wheels: wheel top left, wheel top right, wheel bottom left, wheel bottom right"
+
+
+// then delete again
+//UniversalFactory::getCache()->deleteByPrefix("Ekom/car--"); // delete the whole car with its four wheels
+
+
+/**
+ * The file structure will look like this before the call to delete method:
+ *
+ * - cache
+ * ----- Ekom
+ * --------- car--css.txt   
+ * --------- car-wheel-bottom left.txt
+ * --------- car-wheel-bottom right.txt
+ * --------- car-wheel-top left.txt
+ * --------- car-wheel-top right.txt
+ * - related
+ * ----- Ekom
+ * --------- car--css.txt  // contains the related children list (the four wheel's cache items in cache/Ekom)
+ *
+ *
+ *
+ */
+
+```
+
+
+
+
 History Log
 ------------------
+    
+- 1.2.0 -- 2017-11-18
+
+    - add WithRelatedFileSystemDerbyCache
+    - fix FileSystemDerbyCache hook system typo
     
 - 1.1.0 -- 2017-11-18
 
