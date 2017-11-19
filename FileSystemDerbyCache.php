@@ -34,7 +34,7 @@ class FileSystemDerbyCache extends DerbyCache
     {
         $this->hook('onCacheStart', $cacheIdentifier);
         $file = $this->getCacheFile($cacheIdentifier);
-        if (false === $forceGenerate && file_exists($file)) {
+        if (true !== $forceGenerate && file_exists($file)) {
 
             $this->hook('onCacheHit', $cacheIdentifier);
             $this->hook('onCacheEnd', $cacheIdentifier);
