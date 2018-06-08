@@ -68,6 +68,13 @@ class FileSystemDerbyCache extends DerbyCache
         }
     }
 
+    public function deleteByCacheIdentifier(string $cacheIdentifier)
+    {
+        $file = $this->getCacheFile($cacheIdentifier);
+        unlink($file);
+        $this->hook('onCacheDelete', $file);
+    }
+
 
     //--------------------------------------------
     //
