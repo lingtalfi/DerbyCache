@@ -162,6 +162,10 @@ a(UniversalFactory::getCar("css")); // "I'm a css car with 4 wheels: wheel top l
 History Log
 ------------------
     
+- 1.5.0 -- 2018-06-08
+
+    - add DerbyCacheInterface.deleteByCacheIdentifier method 
+    
 - 1.4.0 -- 2018-06-08
 
     - add FileSystemDerbyCache.deleteByCacheIdentifier method 
