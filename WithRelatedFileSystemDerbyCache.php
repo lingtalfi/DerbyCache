@@ -1,9 +1,9 @@
 <?php
 
 
-namespace DerbyCache;
+namespace Ling\DerbyCache;
 
-use Bat\FileSystemTool;
+use Ling\Bat\FileSystemTool;
 
 
 /**

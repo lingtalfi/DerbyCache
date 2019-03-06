@@ -14,7 +14,7 @@ Install
 ==========
 Using the [uni](https://github.com/lingtalfi/universe-naive-importer) command.
 ```bash
-uni import DerbyCache
+uni import Ling/DerbyCache
 ```
 
 Or just download it and place it where you want otherwise.
@@ -27,7 +27,7 @@ Playground
 
 
 use Core\Services\A;
-use DerbyCache\FileSystemDerbyCache;
+use Ling\DerbyCache\FileSystemDerbyCache;
 
 // using kamille framework here (https://github.com/lingtalfi/kamille)
 require_once __DIR__ . "/../boot.php";
@@ -76,7 +76,7 @@ Playground for WithRelatedFileSystemDerbyCache
 
 
 use Core\Services\A;
-use DerbyCache\WithRelatedFileSystemDerbyCache;
+use Ling\DerbyCache\WithRelatedFileSystemDerbyCache;
 
 // using kamille framework here (https://github.com/lingtalfi/kamille)
 require_once __DIR__ . "/../boot.php";

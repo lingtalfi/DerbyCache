@@ -1,7 +1,7 @@
 <?php
 
 
-namespace DerbyCache;
+namespace Ling\DerbyCache;
 
 
 /**
