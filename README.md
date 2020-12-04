@@ -161,7 +161,11 @@ a(UniversalFactory::getCar("css")); // "I'm a css car with 4 wheels: wheel top l
 
 History Log
 ------------------
-    
+
+- 1.5.1 -- 2020-12-04
+
+    - Add lpi-deps.byml file
+
 - 1.5.0 -- 2018-06-08
 
     - add DerbyCacheInterface.deleteByCacheIdentifier method 
